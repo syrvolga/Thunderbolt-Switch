@@ -34,6 +34,8 @@ namespace DockerForm
             checkBoxPlaySound.Checked = Properties.Settings.Default.PlaySound;
             checkBoxSpeechSynthesizer.Checked = Properties.Settings.Default.SpeechSynthesizer;
 
+            textBoxSpecificScreenDeviceName.Text = Properties.Settings.Default.SpecificScreenDeviceName;
+
             comboBoxVoices.Items.Clear();
             foreach (InstalledVoice voice in MainForm.CurrentSynthesizer.GetInstalledVoices())
             {
@@ -98,6 +100,11 @@ namespace DockerForm
             Properties.Settings.Default.MonitorProfiles = checkBoxMonitorPowerProfiles.Checked;
         }
 
+        private void textBoxSpecificScreenDeviceName_TextChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.SpecificScreenDeviceName = textBoxSpecificScreenDeviceName.Text;
+        }
+
         private void Settings_FormClosing(Object sender, FormClosingEventArgs e)
         {
             foreach (PowerProfile profile in MainForm.ProfileDB.Values)
@@ -128,6 +135,8 @@ namespace DockerForm
                 bool isOnBoot = profile._ApplyMask.HasFlag(ProfileMask.OnStartup);
                 bool isOnStatusChange = profile._ApplyMask.HasFlag(ProfileMask.OnStatusChange);
                 bool isOnScreen = profile._ApplyMask.HasFlag(ProfileMask.ExternalScreen);
+                bool isOnSpecificScreen = profile._ApplyMask.HasFlag(ProfileMask.SpecificScreen);
+                bool isNotOnSpecificScreen = profile._ApplyMask.HasFlag(ProfileMask.NoSpecificScreen);
                 bool isGameBounds = profile._ApplyMask.HasFlag(ProfileMask.GameBounds);
 
                 ListViewItem newProfile = new ListViewItem(new string[] { profile.ProfileName }, profile.ProfileName);
@@ -160,10 +169,14 @@ namespace DockerForm
             if (listBoxTriggers.GetSelected(3))
                 CurrentProfile._ApplyMask |= ProfileMask.ExternalScreen;
             if (listBoxTriggers.GetSelected(4))
-                CurrentProfile._ApplyMask |= ProfileMask.OnStartup;
+                CurrentProfile._ApplyMask |= ProfileMask.SpecificScreen;
             if (listBoxTriggers.GetSelected(5))
-                CurrentProfile._ApplyMask |= ProfileMask.OnStatusChange;
+                CurrentProfile._ApplyMask |= ProfileMask.NoSpecificScreen;
             if (listBoxTriggers.GetSelected(6))
+                CurrentProfile._ApplyMask |= ProfileMask.OnStartup;
+            if (listBoxTriggers.GetSelected(7))
+                CurrentProfile._ApplyMask |= ProfileMask.OnStatusChange;
+            if (listBoxTriggers.GetSelected(8))
                 CurrentProfile._ApplyMask |= ProfileMask.GameBounds;
         }
 
@@ -231,6 +244,8 @@ namespace DockerForm
                 bool isPluggedIn = CurrentProfile._ApplyMask.HasFlag(ProfileMask.PluggedIn);
                 bool isExtGPU = CurrentProfile._ApplyMask.HasFlag(ProfileMask.ExternalGPU);
                 bool isOnScreen = CurrentProfile._ApplyMask.HasFlag(ProfileMask.ExternalScreen);
+                bool isOnSpecificScreen = CurrentProfile._ApplyMask.HasFlag(ProfileMask.SpecificScreen);
+                bool isNotOnSpecificScreen = CurrentProfile._ApplyMask.HasFlag(ProfileMask.NoSpecificScreen);
                 bool isOnBoot = CurrentProfile._ApplyMask.HasFlag(ProfileMask.OnStartup);
                 bool isOnStatusChange = CurrentProfile._ApplyMask.HasFlag(ProfileMask.OnStatusChange);
                 bool isGameBounds = CurrentProfile._ApplyMask.HasFlag(ProfileMask.GameBounds);
@@ -257,12 +272,16 @@ namespace DockerForm
                     listBoxTriggers.SetSelected(2, true);
                 if (isOnScreen)
                     listBoxTriggers.SetSelected(3, true);
-                if (isOnBoot)
+                if (isOnSpecificScreen)
                     listBoxTriggers.SetSelected(4, true);
-                if (isOnStatusChange)
+                if (isNotOnSpecificScreen)
                     listBoxTriggers.SetSelected(5, true);
-                if (isGameBounds)
+                if (isOnBoot)
                     listBoxTriggers.SetSelected(6, true);
+                if (isOnStatusChange)
+                    listBoxTriggers.SetSelected(7, true);
+                if (isGameBounds)
+                    listBoxTriggers.SetSelected(8, true);
             }
         }
 

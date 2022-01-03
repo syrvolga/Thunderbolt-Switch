@@ -116,9 +116,11 @@ namespace DockerForm
 				bool isOnBoot = profile._ApplyMask.HasFlag(ProfileMask.OnStartup);
 				bool isOnStatusChange = profile._ApplyMask.HasFlag(ProfileMask.OnStatusChange);
 				bool isOnScreen = profile._ApplyMask.HasFlag(ProfileMask.ExternalScreen);
+                bool isOnSpecificScreen = profile._ApplyMask.HasFlag(ProfileMask.SpecificScreen);
+                bool isNotOnSpecificScreen = profile._ApplyMask.HasFlag(ProfileMask.NoSpecificScreen);
                 bool isGameBounds = profile._ApplyMask.HasFlag(ProfileMask.GameBounds);
 
-                ListViewItem newProfile = new ListViewItem(new string[] { profile.ProfileName, isOnBattery.ToString(), isPluggedIn.ToString(), isExtGPU.ToString(), isOnScreen.ToString() }, profile.ProfileName);
+                ListViewItem newProfile = new ListViewItem(new string[] { profile.ProfileName, isOnBattery.ToString(), isPluggedIn.ToString(), isExtGPU.ToString(), isOnScreen.ToString(), isOnSpecificScreen.ToString(), isNotOnSpecificScreen.ToString() }, profile.ProfileName);
                 newProfile.Tag = profile.ProfileGuid;
 
                 // skip default

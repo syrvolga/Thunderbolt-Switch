@@ -41,6 +41,8 @@ namespace DockerForm
             this.checkBoxMonitorPowerProfiles = new System.Windows.Forms.CheckBox();
             this.checkBoxMonitorHardware = new System.Windows.Forms.CheckBox();
             this.checkBoxSaveOnExit = new System.Windows.Forms.CheckBox();
+            this.labelSpecificScreenDeviceName = new System.Windows.Forms.Label();
+            this.textBoxSpecificScreenDeviceName = new System.Windows.Forms.TextBox();
             this.checkBoxMonitorProcesses = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.comboBoxLanguage = new System.Windows.Forms.ComboBox();
@@ -132,11 +134,13 @@ namespace DockerForm
             this.groupBox2.Controls.Add(this.checkBoxMonitorPowerProfiles);
             this.groupBox2.Controls.Add(this.checkBoxMonitorHardware);
             this.groupBox2.Controls.Add(this.checkBoxSaveOnExit);
+            this.groupBox2.Controls.Add(this.textBoxSpecificScreenDeviceName);
+            this.groupBox2.Controls.Add(this.labelSpecificScreenDeviceName);
             this.groupBox2.Controls.Add(this.checkBoxMonitorProcesses);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox2.Location = new System.Drawing.Point(3, 223);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(770, 116);
+            this.groupBox2.Size = new System.Drawing.Size(770, 139);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Environment";
@@ -188,6 +192,26 @@ namespace DockerForm
             this.checkBoxSaveOnExit.Text = "Save environment settings when I close the application";
             this.checkBoxSaveOnExit.UseVisualStyleBackColor = true;
             this.checkBoxSaveOnExit.CheckedChanged += new System.EventHandler(this.checkBoxSaveOnExit_CheckedChanged);
+            // 
+            // labelSpecificScreenDeviceName
+            // 
+            this.labelSpecificScreenDeviceName.AutoSize = true;
+            this.labelSpecificScreenDeviceName.Location = new System.Drawing.Point(6, 114);
+            this.labelSpecificScreenDeviceName.Name = "labelSpecificScreenDeviceName";
+            this.labelSpecificScreenDeviceName.Size = new System.Drawing.Size(286, 17);
+            this.labelSpecificScreenDeviceName.TabIndex = 0;
+            this.labelSpecificScreenDeviceName.Text = "Specific screen device name (as in Windows settings)";
+            this.toolTip1.SetToolTip(this.labelSpecificScreenDeviceName, "Exact same device name as in Windows > Settings > Display > Advanced display");
+            // 
+            // textBoxSpecificScreenDeviceName
+            // 
+            this.textBoxSpecificScreenDeviceName.AutoSize = true;
+            this.textBoxSpecificScreenDeviceName.Location = new System.Drawing.Point(292, 114);
+            this.textBoxSpecificScreenDeviceName.Name = "textBoxSpecificScreenDeviceName";
+            this.textBoxSpecificScreenDeviceName.Size = new System.Drawing.Size(143, 17);
+            this.textBoxSpecificScreenDeviceName.TabIndex = 0;
+            this.textBoxSpecificScreenDeviceName.TextChanged += new System.EventHandler(this.textBoxSpecificScreenDeviceName_TextChanged);
+            this.toolTip1.SetToolTip(this.textBoxSpecificScreenDeviceName, "Exact same device name as in Windows > Settings > Display > Advanced display");
             // 
             // checkBoxMonitorProcesses
             // 
@@ -417,6 +441,8 @@ namespace DockerForm
             "When running on current",
             "When running on external GPU",
             "When running on external screen",
+            "When running on specific screen",
+            "When not running on specific screen",
             "When application starts",
             "When device status changes",
             "When a game is executed"});
@@ -771,6 +797,8 @@ namespace DockerForm
         private System.Windows.Forms.CheckBox checkBoxToastNotifications;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckBox checkBoxSaveOnExit;
+        private System.Windows.Forms.Label labelSpecificScreenDeviceName;
+        private System.Windows.Forms.TextBox textBoxSpecificScreenDeviceName;
         private System.Windows.Forms.CheckBox checkBoxMonitorProcesses;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.CheckBox checkBoxMonitorHardware;

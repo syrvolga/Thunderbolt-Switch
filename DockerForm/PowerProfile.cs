@@ -18,7 +18,9 @@ namespace DockerForm
         ExternalScreen = 16,
         OnStatusChange = 32,
         GameBounds = 64,
-        All = OnBattery | PluggedIn | ExternalGPU | OnStartup | ExternalScreen | OnStatusChange | GameBounds
+        SpecificScreen = 128,
+        NoSpecificScreen = 256,
+        All = OnBattery | PluggedIn | ExternalGPU | OnStartup | ExternalScreen | OnStatusChange | GameBounds | SpecificScreen | NoSpecificScreen
     }
 
     public static class StringExtension

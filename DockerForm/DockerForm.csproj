@@ -169,6 +169,7 @@
     <Compile Include="Settings.Designer.cs">
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools.cs" />
     <Compile Include="ShellEx.cs" />
     <Compile Include="Shell\SHFILEINFO.cs" />
     <Compile Include="Shell\RECT.cs" />

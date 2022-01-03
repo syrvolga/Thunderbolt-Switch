@@ -20,6 +20,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using Task = Microsoft.Win32.TaskScheduler.Task;
+using Tools;
 
 namespace DockerForm
 {
@@ -29,6 +30,7 @@ namespace DockerForm
         public static bool prevDockStatus = false;
         public static bool prevPowerStatus = false;
         public static int prevScreenCount;
+        public static bool prevOnSpecificScreen;
 
         public static bool IsHardwareNew = false;
         public static bool IsPowerNew = false;
@@ -37,6 +39,7 @@ namespace DockerForm
         public static bool DockStatus = false;              // is device plugged to an external GPU
         public static bool PowerStatus;                     // is device plugged or running on battery
         public static int ScreenCount;
+        public static bool OnSpecificScreen;
 
         public static bool IsFirstBoot = true;
         public static bool IsHardwarePending = true;
@@ -106,6 +109,7 @@ namespace DockerForm
                 case WM_DEVICECHANGE:
                 case WM_DISPLAYCHANGE:
                     IsHardwarePending = true;
+                    IsScreenPending = true;
                     break;
             }
 
@@ -132,6 +136,8 @@ namespace DockerForm
             bool isOnBoot = profile._ApplyMask.HasFlag(ProfileMask.OnStartup);
             bool isOnStatusChange = profile._ApplyMask.HasFlag(ProfileMask.OnStatusChange);
             bool isOnScreen = profile._ApplyMask.HasFlag(ProfileMask.ExternalScreen);
+            bool isOnSpecificScreen = profile._ApplyMask.HasFlag(ProfileMask.SpecificScreen);
+            bool isNotOnSpecificScreen = profile._ApplyMask.HasFlag(ProfileMask.NoSpecificScreen);
             bool isGameBounds = profile._ApplyMask.HasFlag(ProfileMask.GameBounds);
 
             if (IsFirstBoot && !isOnBoot)
@@ -146,6 +152,10 @@ namespace DockerForm
             else if (DockStatus && isExtGPU)
                 return true;
             else if (ScreenCount > 1 && isOnScreen)
+                return true;
+            else if (!OnSpecificScreen && isNotOnSpecificScreen)
+                return true;
+            else if (OnSpecificScreen && isOnSpecificScreen)
                 return true;
 
             return false;
@@ -490,11 +500,14 @@ namespace DockerForm
 
         public static void UpdateMonitorScreen()
         {
+            string SpecificScreenDeviceName = Properties.Settings.Default.SpecificScreenDeviceName;
             ScreenCount = Screen.AllScreens.Length;
-            IsScreenNew = prevScreenCount != ScreenCount;
+            OnSpecificScreen = Screen.AllScreens.Where(s => s.DeviceFriendlyName() == SpecificScreenDeviceName).ToArray().Length == 1;
+            IsScreenNew = prevScreenCount != ScreenCount || prevOnSpecificScreen != OnSpecificScreen;
 
             // update status
             prevScreenCount = ScreenCount;
+            prevOnSpecificScreen = OnSpecificScreen;
             IsScreenPending = false;
         }
 

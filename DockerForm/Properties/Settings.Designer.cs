@@ -130,7 +130,22 @@ namespace DockerForm.Properties {
                 this["SaveOnExit"] = value;
             }
         }
-        
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MY DISPLAY")]
+        public string SpecificScreenDeviceName
+        {
+            get
+            {
+                return ((string)(this["SpecificScreenDeviceName"]));
+            }
+            set
+            {
+                this["SpecificScreenDeviceName"] = value;
+            }
+        }
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("2000")]
